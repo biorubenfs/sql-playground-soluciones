@@ -420,6 +420,195 @@ INNER JOIN empleado e ON e.id_departamento=d.id AND e.apellido2 IS NULL
 
 ## Composición externa
 
+1. Devuelve un listado con los empleados y los datos de los departamentos donde trabaja cada uno. Muestre también aquellos empleados no adscritos a ningún departamento.
+
+```sql
+SELECT *
+FROM empleado e
+LEFT JOIN departamento d ON d.id=e.id_departamento
+```
+
+2. Devuelve un listado con los empleados y los datos de los departamentos donde trabaja cada uno. Ordena el resultado, en primer lugar por el nombre del departamento (en orden alfabético) y en segundo lugar por los apellidos y el nombre de los empleados.
+
+```sql
+SELECT *
+FROM empleado e
+INNER JOIN departamento d ON d.id=e.id_departamento
+ORDER BY d.nombre ASC, e.apellido1, e.apellido2, e.nombre
+```
+
+3. Devuelve un listado con el identificador y el nombre del departamento, solamente de aquellos departamentos que tienen empleados.
+
+```sql
+SELECT DISTINCT d.id, d.nombre
+FROM departamento d
+INNER JOIN empleado e ON d.id=e.id_departamento
+```
+
+4. Devuelve un listado con el identificador, el nombre del departamento y el valor del presupuesto actual del que dispone, solamente de aquellos departamentos que tienen empleados. El valor del presupuesto actual lo puede calcular restando al valor del presupuesto inicial (columna presupuesto) el valor de los gastos que ha generado (columna gastos).
+
+```sql
+SELECT DISTINCT d.id, d.nombre, (d.presupuesto - d.gastos) AS PRESUPUESTO_ACTUAL
+FROM departamento d
+INNER JOIN empleado e ON e.id_departamento=d.id
+```
+
+5. Devuelve el nombre del departamento donde trabaja el empleado que tiene el nif 38382980M.
+
+```sql
+SELECT d.nombre
+FROM departamento d
+INNER JOIN empleado e ON e.id_departamento=d.id
+WHERE e.nif="38382980M"
+```
+
+6. Devuelve el nombre del departamento donde trabaja el empleado Pepe Ruiz Santana.
+
+```sql
+SELECT d.nombre
+FROM departamento d
+INNER JOIN empleado e ON e.id_departamento=d.id
+WHERE e.nombre="Pepe" AND e.apellido1="Ruiz" AND e.apellido2="Santana"
+```
+
+7. Devuelve un listado con los datos de los empleados que trabajan en el departamento de I+D. Ordena el resultado alfabéticamente.
+
+```sql
+SELECT e.id, e.nif, e.nombre, e.apellido1, e.apellido2, e.id_departamento
+FROM empleado e
+INNER JOIN departamento d ON d.id=e.id_departamento
+WHERE d.nombre="I+D"
+```
+
+8. Devuelve un listado con los datos de los empleados que trabajan en el departamento de Sistemas, Contabilidad o I+D. Ordena el resultado alfabéticamente.
+
+```sql
+SELECT e.id, e.nombre, e.nif, e.apellido1, e.apellido2
+FROM empleado e
+INNER JOIN departamento d ON d.id=e.id_departamento
+WHERE d.nombre IN ("Sistemas", "Contabilidad", "I+D")
+```
+
+9. Devuelve una lista con el nombre de los empleados que tienen los departamentos que no tienen un presupuesto entre 100000 y 200000 euros.
+
+```sql
+SELECT e.nombre
+FROM empleado e
+INNER JOIN departamento d ON d.id=e.id_departamento
+WHERE d.presupuesto NOT BETWEEN 100000 AND 200000
+```
+
+10. Devuelve un listado con el nombre de los departamentos donde existe algún empleado cuyo segundo apellido sea NULL. Tenga en cuenta que no debe mostrar nombres de departamentos que estén repetidos.
+
+```sql
+SELECT DISTINCT d.nombre
+FROM departamento d
+INNER JOIN empleado e ON e.id_departamento=d.id AND e.apellido2 IS NULL
+```
+
+
 ## Consultas resumen
+
+1. Calcula la suma del presupuesto de todos los departamentos.
+
+```sql
+SELECT SUM(d.presupuesto)
+FROM departamento d
+```
+
+2. Calcula la media del presupuesto de todos los departamentos.
+
+```sql
+SELECT AVG(d.presupuesto)
+FROM departamento d
+```
+
+3. Calcula el valor mínimo del presupuesto de todos los departamentos.
+
+```sql
+SELECT MIN(d.presupuesto)
+FROM departamento d
+```
+
+4. Calcula el nombre del departamento y el presupuesto que tiene asignado, del departamento con menor presupuesto.
+
+```sql
+SELECT d.nombre, d.presupuesto
+FROM departamento d
+WHERE d.presupuesto=(
+    SELECT MIN(d2.presupuesto) 
+    FROM departamento d2
+)
+```
+
+5. Calcula el valor máximo del presupuesto de todos los departamentos.
+
+```sql
+SELECT MAX(d.presupuesto)
+FROM departamento d
+```
+
+6. Calcula el nombre del departamento y el presupuesto que tiene asignado, del departamento con mayor presupuesto.
+
+```sql
+SELECT d.nombre, d.presupuesto
+FROM departamento d
+WHERE d.presupuesto=(
+    SELECT MAX(d2.presupuesto) 
+    FROM departamento d2
+)
+```
+
+7. Calcula el número total de empleados que hay en la tabla empleado.
+
+```sql
+SELECT COUNT(*)
+FROM empleado e
+```
+
+8. Calcula el número de empleados que no tienen NULL en su segundo apellido.
+
+```sql
+SELECT COUNT(*)
+FROM empleado e
+WHERE e.apellido2 IS NOT NULL
+```
+
+9. Calcula el número de empleados que hay en cada departamento. Tienes que devolver dos columnas, una con el nombre del departamento y otra con el número de empleados que tiene asignados.
+
+```sql
+SELECT d.nombre, COUNT(*) AS TOTAL_EMPLEADOS
+FROM empleado e
+INNER JOIN departamento d ON d.id=e.id_departamento
+GROUP BY d.nombre
+```
+
+10. Calcula el nombre de los departamentos que tienen más de 2 empleados. El resultado debe tener dos columnas, una con el nombre del departamento y otra con el número de empleados que tiene asignados.
+
+```sql
+SELECT d.nombre, COUNT(*) AS TOTAL_EMPLEADOS
+FROM empleado e
+INNER JOIN departamento d ON d.id=e.id_departamento
+GROUP BY d.nombre
+HAVING TOTAL_EMPLEADOS>2
+```
+
+11. Calcula el número de empleados que trabajan en cada uno de los departamentos. El resultado de esta consulta también tiene que incluir aquellos departamentos que no tienen ningún empleado asociado.
+
+```sql
+SELECT d.nombre, COUNT(e.nombre) AS 'Cantidad'
+FROM empleado e 
+RIGHT JOIN departamento d ON e.id_departamento = d.id
+GROUP BY d.nombre
+```
+
+12. Calcula el número de empleados que trabajan en cada unos de los departamentos que tienen un presupuesto mayor a 200000 euros.
+
+```sql
+SELECT d.nombre, COUNT() AS TOTAL_EMPLEADOS
+FROM empleado e
+INNER JOIN departamento d ON d.id=e.id_departamento AND d.presupuesto>200000
+GROUP BY d.id
+```
 
 ## Subconsultas
