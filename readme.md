@@ -1,4 +1,4 @@
-# Práctica SQL - Juan Martín Franco
+# Práctica SQL
 
 Repositorio dedicado a la resolución de ejercicios SQL utilizando el SGBD MySQL.
 
