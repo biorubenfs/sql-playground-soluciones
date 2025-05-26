@@ -1,5 +1,15 @@
-# Nombre
+# Nombre de la Base de Datos
 
+## Contenido
+
+  - [Diagrama-ER](#diagrama-er)
+  - [Consultas sencillas](#consultas-sencillas)
+  - [Composición interna](#composición-interna)
+  - [Composición externa](#composición-externa)
+  - [Consultas resumen](#consultas-resumen)
+  - [Subconsultas](#subconsultas)
+
+## Diagrama ER
 ![diagrama_entidad_relacion_tienda](image.png)
 
 ## Consultas sencillas
