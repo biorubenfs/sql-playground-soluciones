@@ -612,3 +612,143 @@ GROUP BY d.id
 ```
 
 ## Subconsultas
+
+1. Devuelve un listado con todos los empleados que tiene el departamento de Sistemas. (Sin utilizar INNER JOIN).
+
+```sql
+SELECT *
+FROM empleado e
+WHERE e.id_departamento=(
+    SELECT d2.id 
+    FROM departamento d2 
+    WHERE d2.nombre="Sistemas"    
+)
+```
+
+2. Devuelve el nombre del departamento con mayor presupuesto y la cantidad que tiene asignada.
+
+```sql
+SELECT d.nombre, d.presupuesto
+FROM departamento d
+ORDER BY d.presupuesto DESC
+LIMIT 1
+```
+
+3. Devuelve el nombre del departamento con menor presupuesto y la cantidad que tiene asignada.
+
+```sql
+SELECT d.nombre, d.presupuesto
+FROM departamento d
+WHERE d.presupuesto=(
+    SELECT MIN(d.presupuesto)
+    FROM presupuesto d2
+)
+```
+
+4. Devuelve el nombre del departamento con mayor presupuesto y la cantidad que tiene asignada. Sin hacer uso de MAX, ORDER BY ni LIMIT.
+
+```sql
+SELECT d.nombre, d.presupuesto
+FROM departamento d
+WHERE d.presupuesto=(
+    SELECT MAX(d.presupuesto)
+    FROM presupuesto d2
+)
+```
+
+```sql
+SELECT d.nombre, d.presupuesto
+FROM departamento d
+WHERE d.presupuesto >= ALL(
+    SELECT d.presupuesto
+    FROM departamento d)
+```
+
+5. Devuelve el nombre del departamento con menor presupuesto y la cantidad que tiene asignada. Sin hacer uso de MIN, ORDER BY ni LIMIT.
+
+```sql
+SELECT d.nombre, d.presupuesto
+FROM departamento d
+WHERE d.presupuesto=(
+    SELECT MIN(d.presupuesto)
+    FROM presupuesto d2
+)
+```
+
+```sql
+SELECT d.nombre, d.presupuesto
+FROM departamento d
+WHERE d.presupuesto <= ALL(
+    SELECT d.presupuesto
+    FROM departamento d)
+```
+6. Devuelve los nombres de los departamentos que tienen empleados asociados. (Utilizando ALL o ANY).
+
+```sql
+SELECT d.nombre
+FROM departamento d
+WHERE d.id = ANY(
+    SELECT e.id_departamento
+    FROM empleado e
+)
+```
+
+7. Devuelve los nombres de los departamentos que no tienen empleados asociados. (Utilizando ALL o ANY).
+
+```sql
+SELECT d.nombre
+FROM departamento d
+WHERE d.id <> ALL(
+    SELECT e.id_departamento
+    FROM empleado e
+    WHERE e.id_departamento IS NOT NULL
+)
+```
+
+8. Devuelve los nombres de los departamentos que tienen empleados asociados. (Utilizando IN o NOT IN).
+
+```sql
+SELECT d.nombre
+FROM departamento d
+WHERE d.id IN (
+    SELECT e2.id_departamento 
+    FROM empleado e2
+    WHERE e2.id_departamento IS NOT NULL  
+)
+```
+
+9. Devuelve los nombres de los departamentos que no tienen empleados asociados. (Utilizando IN o NOT IN).
+
+```sql
+SELECT d.nombre
+FROM departamento d
+WHERE d.id NOT IN (
+    SELECT e2.id_departamento 
+    FROM empleado e2
+    WHERE e2.id_departamento IS NOT NULL  
+)
+```
+
+10. Devuelve los nombres de los departamentos que tienen empleados asociados. (Utilizando EXISTS o NOT EXISTS).
+
+```sql
+SELECT d.nombre
+FROM departamento d
+WHERE EXISTS (
+    SELECT e2.id_departamento
+    FROM empleado e2
+    WHERE e2.id_departamento=d.id
+)
+```
+
+11. Devuelve los nombres de los departamentos que tienen empleados asociados. (Utilizando EXISTS o NOT EXISTS).
+
+```sql
+SELECT d.nombre
+FROM departamento d
+WHERE NOT EXISTS (
+    SELECT e2.id_departamento
+    FROM empleado e2
+    WHERE e2.id_departamento=d.id
+)
+```
