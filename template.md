@@ -3,6 +3,7 @@
 ## Contenido
 
   - [Diagrama-ER](#diagrama-er)
+  - [Tablas](#tablas)
   - [Consultas sencillas](#consultas-sencillas)
   - [Composición interna](#composición-interna)
   - [Composición externa](#composición-externa)
@@ -10,7 +11,9 @@
   - [Subconsultas](#subconsultas)
 
 ## Diagrama ER
-![diagrama_entidad_relacion_tienda](image.png)
+![diagrama_entidad_relacion_tienda](./diagramas-entidad-relación/tienda.png)
+
+## Tablas
 
 ## Consultas sencillas
 
