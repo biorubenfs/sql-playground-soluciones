@@ -1,5 +1,15 @@
 # Empleados
 
+## Contenido
+
+  - [Diagrama-ER](#diagrama-er)
+  - [Consultas sencillas](#consultas-sencillas)
+  - [Composición interna](#composición-interna)
+  - [Composición externa](#composición-externa)
+  - [Consultas resumen](#consultas-resumen)
+  - [Subconsultas](#subconsultas)
+
+## Diagrama ER
 ![diagrama_entidad_relacion_empleados](../diagramas-entidad-relación/empleados.png)
 
 ## Consultas sencillas
@@ -172,6 +182,117 @@ WHERE d.presupuesto>=150000
 SELECT d.nombre, d.gastos
 FROM departamento d
 WHERE d.gastos<5000
+```
+
+23. Devuelve una lista con el nombre de los departamentos y el presupuesto, de aquellos que tienen un presupuesto entre 100000 y 200000 euros. Sin utilizar el operador BETWEEN.
+
+```sql
+SELECT d.nombre, d.presupuesto
+FROM departamento d
+WHERE d.presupuesto>10000 AND d.presupuesto<200000
+```
+
+24. Devuelve una lista con el nombre de los departamentos que no tienen un presupuesto entre 100000 y 200000 euros. Sin utilizar el operador BETWEEN.
+
+```sql
+SELECT d.nombre, d.presupuesto
+FROM departamento d
+WHERE d.presupuesto<10000 OR d.presupuesto>200000
+```
+
+25. Devuelve una lista con el nombre de los departamentos que tienen un presupuesto entre 100000 y 200000 euros. Utilizando el operador BETWEEN.
+
+```sql
+SELECT d.nombre, d.presupuesto
+FROM departamento d
+WHERE d.presupuesto BETWEEN 100000 AND 200000
+```
+
+26. Devuelve una lista con el nombre de los departamentos que no tienen un presupuesto entre 100000 y 200000 euros. Utilizando el operador BETWEEN.
+
+```sql
+SELECT d.nombre, d.presupuesto
+FROM departamento d
+WHERE d.presupuesto NOT BETWEEN 100000 AND 200000
+```
+
+27. Devuelve una lista con el nombre de los departamentos, gastos y presupuesto, de aquellos departamentos donde los gastos sean mayores que el presupuesto del que disponen.
+
+```sql
+SELECT d.nombre, d.gastos, d.presupuesto
+FROM departamento d
+WHERE d.gastos>d.presupuesto
+```
+
+28. Devuelve una lista con el nombre de los departamentos, gastos y presupuesto, de aquellos departamentos donde los gastos sean menores que el presupuesto del que disponen.
+
+```sql
+SELECT d.nombre, d.gastos, d.presupuesto
+FROM departamento d
+WHERE d.gastos<d.presupuesto
+```
+29. Devuelve una lista con el nombre de los departamentos, gastos y presupuesto, de aquellos departamentos donde los gastos sean iguales al presupuesto del que disponen.
+
+```sql
+SELECT d.nombre, d.gastos, d.presupuesto
+FROM departamento d
+WHERE d.gastos=d.presupuesto
+```
+
+30. Lista todos los datos de los empleados cuyo segundo apellido no sea NULL.
+
+```sql
+SELECT *
+FROM empleado e
+WHERE e.apellido2 IS NULL
+```
+
+31. Lista todos los datos de los empleados cuyo segundo apellido no sea NULL.
+
+```sql
+SELECT *
+FROM empleado e
+WHERE e.apellido2 IS NOT NULL
+```
+
+32. Lista todos los datos de los empleados cuyo segundo apellido sea López.
+
+```sql
+SELECT *
+FROM empleado e
+WHERE e.apellido2="López"
+```
+
+33. Lista todos los datos de los empleados cuyo segundo apellido sea Díaz o Moreno. Sin utilizar el operador IN.
+
+```sql
+SELECT *
+FROM empleado e
+WHERE e.apellido2="Díaz" OR e.apellido2="Moreno"
+```
+
+34. Lista todos los datos de los empleados cuyo segundo apellido sea Díaz o Moreno. Utilizando el operador IN.
+
+```sql
+SELECT *
+FROM empleado e
+WHERE e.apellido2 IN ("Díaz", "Moreno")
+```
+
+35. Lista los nombres, apellidos y nif de los empleados que trabajan en el departamento 3.
+
+```sql
+SELECT e.nombre, e.apellido1, e.apellido2, e.nif
+FROM empleado e
+WHERE e.id_departamento=3
+```
+
+36. Lista los nombres, apellidos y nif de los empleados que trabajan en los departamentos 2, 4 o 5.
+
+```sql
+SELECT e.nombre, e.apellido1, e.apellido2, e.nif
+FROM empleado e
+WHERE e.id_departamento IN (2,4,5)
 ```
 
 ## Composición interna
