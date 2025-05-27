@@ -69,14 +69,87 @@
 
 ## Consultas sencillas
 
-1. Lista el nombre de todos los productos que hay en la tabla `producto`.
+1. Devuelve un listado con todos los pedidos que se han realizado. Los pedidos deben estar ordenados por la fecha de realización, mostrando en primer lugar los pedidos más recientes.
 
 ```sql
-SELECT p.nombre
+SELECT *
+FROM pedido p
+ORDER BY p.fecha DESC
+```
+
+2. Lista los nombres y los precios de todos los productos de la tabla producto.
+
+```sql
+SELECT p.nombre, p.precio
 FROM producto p
 ```
 
 ## Composición interna
+
+1. Devuelve un listado con el identificador, nombre y los apellidos de todos los clientes que han realizado algún pedido. El listado debe estar ordenado alfabéticamente y se deben eliminar los elementos repetidos.
+
+```sql
+SELECT DISTINCT c.id, c.apellido1, c.apellido2, c.nombre
+FROM cliente c
+INNER JOIN pedido p ON p.id_cliente=c.id
+ORDER BY c.apellido1
+```
+
+2. Devuelve un listado que muestre todos los pedidos que ha realizado cada cliente. El resultado debe mostrar todos los datos de los pedidos y del cliente. El listado debe mostrar los datos de los clientes ordenados alfabéticamente.
+
+```sql
+SELECT c.id, c.nombre, c.apellido1, p.id AS ID_PEDIDO
+FROM cliente c
+INNER JOIN pedido p ON c.id=p.id_cliente
+ORDER BY c.apellido1
+```
+
+3. Devuelve un listado que muestre todos los pedidos en los que ha participado un comercial. El resultado debe mostrar todos los datos de los pedidos y de los comerciales. El listado debe mostrar los datos de los comerciales ordenados alfabéticamente.
+
+```sql
+SELECT *
+FROM comercial c
+INNER JOIN pedido p ON c.id=p.id_comercial
+ORDER BY c.apellido1 ASC
+```
+
+4. Devuelve un listado que muestre todos los clientes, con todos los pedidos que han realizado y con los datos de los comerciales asociados a cada pedido.
+
+```sql
+SELECT *
+FROM cliente cl
+INNER JOIN pedido p ON p.id_cliente=cl.id
+INNER JOIN comercial co ON co.id=p.id_comercial
+```
+
+5. Devuelve un listado de todos los clientes que realizaron un pedido durante el año 2017, cuya cantidad esté entre 300 € y 1000 €
+
+```sql
+SELECT DISTINCT cl.id, cl.nombre 
+FROM pedido p
+INNER JOIN cliente cl ON p.id_cliente=cl.id
+WHERE YEAR(p.fecha) = 2017 AND p.total BETWEEN 300 AND 1000
+```
+
+6. Devuelve el nombre y los apellidos de todos los comerciales que ha participado en algún pedido realizado por María Santana Moreno.
+
+```sql
+SELECT DISTINCT  com.apellido1, com.apellido2, com.nombre
+FROM comercial com
+INNER JOIN pedido p ON p.id_comercial=com.id
+INNER JOIN cliente cl ON p.id_cliente=cl.id
+WHERE cl.nombre="María" AND cl.apellido1="Santana" AND cl.apellido2="Moreno"
+```
+
+7. Devuelve el nombre de todos los clientes que han realizado algún pedido con el comercial Daniel Sáez Vega
+
+```sql
+SELECT DISTINCT cl.apellido1, cl.apellido2, cl.nombre
+FROM cliente cl
+INNER JOIN pedido p ON p.id_cliente=cl.id
+INNER JOIN comercial com ON p.id_comercial=com.id
+WHERE com.nombre="Daniel" AND com.apellido1="Sáez" AND com.apellido2="Vega"
+```
 
 ## Composición externa
 
