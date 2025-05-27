@@ -99,6 +99,57 @@ WHERE com.nombre="Daniel" AND com.apellido1="Sáez" AND com.apellido2="Vega"
 
 ## Composición externa
 
+1. Devuelve un listado con todos los clientes junto con los datos de los pedidos que han realizado. Este listado también debe incluir los clientes que no han realizado ningún pedido. El listado debe estar ordenado alfabéticamente por el primer apellido, segundo apellido y nombre de los clientes.
+
+```sql
+SELECT cl.apellido1, cl.apellido2, cl.nombre, p.id AS ID_PEDIDO
+FROM cliente cl
+LEFT JOIN pedido p ON p.id_cliente=cl.id
+ORDER BY cl.apellido1 ASC, cl.apellido2 ASC, cl.nombre ASC
+```
+
+2. Devuelve un listado con todos los comerciales junto con los datos de los pedidos que han realizado. Este listado también debe incluir los comerciales que no han realizado ningún pedido. El listado debe estar ordenado alfabéticamente por el primer apellido, segundo apellido y nombre de los comerciales.
+
+```sql
+SELECT com.apellido1, com.apellido2, com.nombre, p.id AS ID_PEDIDO
+FROM comercial com
+LEFT JOIN pedido p ON p.id_comercial=com.id
+ORDER BY com.apellido1 ASC, com.apellido2 ASC, com.nombre ASC
+```
+
+3. Devuelve un listado que solamente muestre los clientes que no han realizado ningún pedido.
+
+```sql
+SELECT *
+FROM cliente cl
+LEFT JOIN pedido p ON p.id_cliente=cl.id
+WHERE p.id IS NULL
+```
+
+4. Devuelve un listado que solamente muestre los comerciales que no han realizado ningún pedido.
+
+```sql
+SELECT *
+FROM comercial com
+LEFT JOIN pedido p ON p.id_comercial=com.id
+WHERE p.id IS NULL
+```
+
+5. Devuelve un listado con los clientes que no han realizado ningún pedido y de los comerciales que no han participado en ningún pedido. Ordene el listado alfabéticamente por los apellidos y el nombre. En en listado deberá diferenciar de algún modo los clientes y los comerciales.
+
+```sql
+SELECT cl.apellido1, cl.apellido2, cl.nombre, 'Cliente' AS TIPO
+FROM cliente cl
+LEFT JOIN pedido p ON p.id_cliente=cl.id
+WHERE p.id IS NULL
+UNION
+SELECT com.apellido1, com.apellido2, com.nombre, 'Comercial' AS TIPO
+FROM comercial com
+LEFT JOIN pedido p ON p.id_comercial=com.id
+WHERE p.id IS NULL
+ORDER BY 1 ASC, 2 ASC, 3 ASC
+```
+
 ## Consultas resumen
 
 ## Subconsultas
