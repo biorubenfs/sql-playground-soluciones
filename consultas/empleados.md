@@ -3,49 +3,15 @@
 ## Contenido
 
   - [Diagrama-ER](#diagrama-er)
-  - [Tablas](#tablas)
   - [Consultas sencillas](#consultas-sencillas)
   - [Composición interna](#composición-interna)
   - [Composición externa](#composición-externa)
   - [Consultas resumen](#consultas-resumen)
   - [Subconsultas](#subconsultas)
+  - [Anexo: Tablas](#tablas)
 
 ## Diagrama ER
 ![diagrama_entidad_relacion_empleados](../diagramas-entidad-relación/empleados.png)
-
-## Tablas
-
-### Empleado
-
-| id  | nif        | nombre       | apellido1 | apellido2 | id_departamento |
-|-----|------------|--------------|-----------|-----------|-----------------|
-| 1   | 32481596F  | Aarón        | Rivero    | Gómez     | 1               |
-| 2   | Y5575632D  | Adela        | Salas     | Díaz      | 2               |
-| 3   | R6970642B  | Adolfo       | Rubio     | Flores    | 3               |
-| 4   | 77705545E  | Adrián       | Suárez    |           | 4               |
-| 5   | 17087203C  | Marcos       | Loyola    | Méndez    | 5               |
-| 6   | 38382980M  | María        | Santana   | Moreno    | 1               |
-| 7   | 80576669X  | Pilar        | Ruiz      |           | 2               |
-| 8   | 71651431Z  | Pepe         | Ruiz      | Santana   | 3               |
-| 9   | 56399183D  | Juan         | Gómez     | López     | 2               |
-| 10  | 46384486H  | Diego        | Flores    | Salas     | 5               |
-| 11  | 67389283A  | Marta        | Herrera   | Gil       | 1               |
-| 12  | 41234836R  | Irene        | Salas     | Flores    |                 |
-| 13  | 82635162B  | Juan Antonio | Sáez      | Guerrero  |                 |
-
-
-### Departamento
-
-| id  | nombre             | presupuesto | gastos |
-|-----|--------------------|-------------|--------|
-| 1   | Desarrollo         | 120000      | 6000   |
-| 2   | Sistemas           | 150000      | 21000  |
-| 3   | Recursos Humanos   | 280000      | 25000  |
-| 4   | Contabilidad       | 110000      | 3000   |
-| 5   | I+D                | 375000      | 380000 |
-| 6   | Proyectos          | 0           | 0      |
-| 7   | Publicidad         | 0           | 1000   |
-
 
 ## Consultas sencillas
 
@@ -752,3 +718,36 @@ WHERE NOT EXISTS (
     WHERE e2.id_departamento=d.id
 )
 ```
+
+## Tablas
+
+### Empleado
+
+| id  | nif        | nombre       | apellido1 | apellido2 | id_departamento |
+|-----|------------|--------------|-----------|-----------|-----------------|
+| 1   | 32481596F  | Aarón        | Rivero    | Gómez     | 1               |
+| 2   | Y5575632D  | Adela        | Salas     | Díaz      | 2               |
+| 3   | R6970642B  | Adolfo       | Rubio     | Flores    | 3               |
+| 4   | 77705545E  | Adrián       | Suárez    |           | 4               |
+| 5   | 17087203C  | Marcos       | Loyola    | Méndez    | 5               |
+| 6   | 38382980M  | María        | Santana   | Moreno    | 1               |
+| 7   | 80576669X  | Pilar        | Ruiz      |           | 2               |
+| 8   | 71651431Z  | Pepe         | Ruiz      | Santana   | 3               |
+| 9   | 56399183D  | Juan         | Gómez     | López     | 2               |
+| 10  | 46384486H  | Diego        | Flores    | Salas     | 5               |
+| 11  | 67389283A  | Marta        | Herrera   | Gil       | 1               |
+| 12  | 41234836R  | Irene        | Salas     | Flores    |                 |
+| 13  | 82635162B  | Juan Antonio | Sáez      | Guerrero  |                 |
+
+
+### Departamento
+
+| id  | nombre             | presupuesto | gastos |
+|-----|--------------------|-------------|--------|
+| 1   | Desarrollo         | 120000      | 6000   |
+| 2   | Sistemas           | 150000      | 21000  |
+| 3   | Recursos Humanos   | 280000      | 25000  |
+| 4   | Contabilidad       | 110000      | 3000   |
+| 5   | I+D                | 375000      | 380000 |
+| 6   | Proyectos          | 0           | 0      |
+| 7   | Publicidad         | 0           | 1000   |

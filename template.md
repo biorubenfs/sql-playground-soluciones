@@ -3,17 +3,15 @@
 ## Contenido
 
   - [Diagrama-ER](#diagrama-er)
-  - [Tablas](#tablas)
   - [Consultas sencillas](#consultas-sencillas)
   - [Composición interna](#composición-interna)
   - [Composición externa](#composición-externa)
   - [Consultas resumen](#consultas-resumen)
   - [Subconsultas](#subconsultas)
+  - [Anexo: Tablas](#tablas)
 
 ## Diagrama ER
 ![diagrama_entidad_relacion_tienda](./diagramas-entidad-relación/tienda.png)
-
-## Tablas
 
 ## Consultas sencillas
 
@@ -31,3 +29,5 @@ FROM producto p
 ## Consultas resumen
 
 ## Subconsultas
+
+## Anexo: Tablas
