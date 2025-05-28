@@ -11,7 +11,7 @@
   - [Anexo: Tablas](#tablas)
 
 ## Diagrama ER
-![diagrama_entidad_relacion_empleados](../diagramas-entidad-relación/empleados.png)
+![diagrama_entidad_relacion_empleados](../diagramas-entidad-relacion/empleados.png)
 
 ## Consultas sencillas
 

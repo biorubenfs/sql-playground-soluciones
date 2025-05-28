@@ -11,7 +11,7 @@
   - [Anexo: Tablas](#tablas)
 
 ## Diagrama ER
-![diagrama_entidad_relacion_tienda](../diagramas-entidad-relación/ventas.png)
+![diagrama_entidad_relacion_tienda](../diagramas-entidad-relacion/ventas.png)
 
 ## Consultas sencillas
 
@@ -41,7 +41,7 @@ FROM pedido p
 
 4. Devuelve un listado de todos los pedidos que se realizaron durante el año 2017, cuya cantidad total sea superior a 500€.
 
-```
+```sql
 SELECT *
 FROM pedido p
 WHERE YEAR(p.fecha) = "2017" AND p.total>500
@@ -96,6 +96,8 @@ SELECT DISTINCT c.nombre
 FROM comercial c
 WHERE c.nombre LIKE '%el' OR c.nombre LIKE '%o'
 ```
+
+
 
 ## Composición interna
 

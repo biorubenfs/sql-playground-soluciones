@@ -12,7 +12,7 @@
 
 ## Diagrama ER
 
-![diagrama_entidad_relacion_tienda](../diagramas-entidad-relación/tienda.png)
+![diagrama_entidad_relacion_tienda](../diagramas-entidad-relacion/tienda.png)
 
 ## Consultas sencillas
 
