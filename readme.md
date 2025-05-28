@@ -22,4 +22,4 @@ La misma cuenta con múltiples bases de datos y ejercicios.
 
 ### Base de datos N° 4 - Jardinería
 
-<a href="/consultas/jardineria.md">Ver ejercicios de Gestión Ventas</a>
+<a href="/consultas/jardineria.md">Ver ejercicios de Jardinería</a>
