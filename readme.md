@@ -19,3 +19,7 @@ La misma cuenta con múltiples bases de datos y ejercicios.
 ### Base de datos N° 3 - Gestión de ventas
 
 <a href="/consultas/ventas.md">Ver ejercicios de Gestión Ventas</a>
+
+### Base de datos N° 4 - Jardinería
+
+<a href="/consultas/jardineria.md">Ver ejercicios de Gestión Ventas</a>
