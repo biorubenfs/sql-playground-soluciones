@@ -40,16 +40,32 @@ FROM producto
 4. Lista el nombre de los productos, el precio en euros y el precio en dólares estadounidenses (USD).
 
 ```
-SELECT p.nombre, p.precio, p.precio * 1.15
+SELECT p.nombre, p.precio AS EUROS, p.precio*1.15 AS DOLARES
 FROM producto p
 ```
 
 5. Lista el nombre de los productos, el precio en euros y el precio en dólares estadounidenses (USD). Utiliza los siguientes alias para las columnas: nombre de producto, euros, dólares.
 
-```
-SELECT p.nombre AS "nombre de producto", p.precio AS euros, p.precio * 1.15 AS dólares
+```sql
+SELECT p.nombre AS NOMBRE_PRODUCTO, p.precio AS EUROS, p.precio*1.15 AS DOLARES
 FROM producto p
 ```
+
+6. Lista los nombres y los precios de todos los productos de la tabla producto, convirtiendo los nombres a mayúscula.
+
+```sql
+SELECT UPPER(p.nombre), p.precio
+FROM producto p
+```
+
+7. Lista los nombres y los precios de todos los productos de la tabla producto, convirtiendo los nombres a minúscula.
+
+```sql
+SELECT LOWER(p.nombre), p.precio
+FROM producto p
+```
+
+8. Lista el nombre de todos los fabricantes en una columna, y en otra columna obtenga en mayúsculas los dos primeros caracteres del nombre del fabricante.
 
 
 ## Composición interna
