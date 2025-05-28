@@ -250,7 +250,161 @@ WHERE YEAR(p.fecha)=2017
 GROUP BY cl.id
 ```
 
+13. Devuelve un listado que muestre el identificador de cliente, nombre, primer apellido y el valor de la máxima cantidad del pedido realizado por cada uno de los clientes. El resultado debe mostrar aquellos clientes que no han realizado ningún pedido indicando que la máxima cantidad de sus pedidos realizados es 0. Puede hacer uso de la función IFNULL.
+
+```sql
+SELECT cl.id, cl.nombre, cl.apellido1, cl.apellido2, IFNULL(MAX(p.total), 0)
+FROM cliente cl
+LEFT JOIN pedido p ON p.id_cliente=cl.id
+GROUP BY cl.id
+```
+
+14. Devuelve cuál ha sido el pedido de máximo valor que se ha realizado cada año.
+
+```sql
+SELECT YEAR(fecha) AS AÑO, MAX(total) AS PRECIO
+FROM pedido 
+GROUP BY YEAR(fecha)
+```
+
+15. Devuelve el número total de pedidos que se han realizado cada año.
+
+```
+SELECT YEAR(fecha) AS AÑO, COUNT(*)
+FROM pedido 
+GROUP BY YEAR(fecha)
+```
+
 ## Subconsultas
+
+1. Devuelve un listado con todos los pedidos que ha realizado Adela Salas Díaz. (Sin utilizar INNER JOIN).
+
+```sql
+SELECT *
+FROM pedido p
+WHERE p.id_cliente=(
+    SELECT cl.id 
+    FROM cliente cl 
+    WHERE cl.nombre="Adela" AND cl.apellido1="Salas" AND cl.apellido2='Díaz'
+)
+```
+
+2. Devuelve el número de pedidos en los que ha participado el comercial Daniel Sáez Vega. (Sin utilizar INNER JOIN)
+
+```sql
+SELECT COUNT(*)
+FROM pedido p
+WHERE p.id_comercial=(
+    SELECT com.id 
+    FROM comercial com 
+    WHERE com.nombre="Daniel" AND com.apellido1="Sáez" AND com.apellido2='Vega'
+)
+```
+
+3. Devuelve los datos del cliente que realizó el pedido más caro en el año 2019. (Sin utilizar INNER JOIN)
+
+```sql
+SELECT *
+FROM cliente cl
+WHERE cl.id = (
+    SELECT p.id_cliente
+    FROM pedido p 
+    WHERE YEAR(p.fecha) = "2019"
+    ORDER BY p.total DESC
+    LIMIT 1
+)
+```
+
+4. Devuelve la fecha y la cantidad del pedido de menor valor realizado por el cliente Pepe Ruiz Santana.
+
+```sql
+SELECT p.fecha, p.total
+FROM pedido p
+WHERE p.id_cliente = (
+    SELECT cl.id
+    FROM cliente cl
+    WHERE cl.nombre="Pepe" AND cl.apellido1="Ruiz" AND cl.apellido2="Santana"
+)
+ORDER BY p.total
+LIMIT 1
+```
+
+5. Devuelve un listado con los datos de los clientes y los pedidos, de todos los clientes que han realizado un pedido durante el año 2017 con un valor mayor o igual al valor medio de los pedidos realizados durante ese mismo año.
+
+```sql
+SELECT *
+FROM pedido p
+INNER JOIN cliente cl ON cl.id=p.id_cliente
+WHERE YEAR(p.fecha) = "2017" AND p.total >= (
+    SELECT AVG(p2.total)
+    FROM pedido p2
+    WHERE YEAR(p2.fecha)="2017"
+)
+```
+
+6. Devuelve el pedido más caro que existe en la tabla pedido si hacer uso de MAX, ORDER BY ni LIMIT.
+
+```sql
+SELECT *
+FROM pedido p
+WHERE p.total >= ALL(SELECT p2.total FROM pedido p2)
+```
+
+7. Devuelve un listado de los clientes que no han realizado ningún pedido. (Utilizando ANY o ALL).
+
+```sql
+SELECT *
+FROM cliente cl
+WHERE cl.id <> ALL (SELECT p.id_cliente FROM pedido p)
+```
+
+8. Devuelve un listado de los comerciales que no han realizado ningún pedido. (Utilizando ANY o ALL).
+
+```sql
+SELECT *
+FROM comercial com
+WHERE com.id <> ALL (SELECT p.id_comercial FROM pedido p)
+```
+
+9. Devuelve un listado de los clientes que no han realizado ningún pedido. (Utilizando IN o NOT IN).
+
+```sql
+SELECT *
+FROM cliente cl
+WHERE cl.id NOT IN(SELECT p.id_cliente FROM pedido p)
+```
+
+10. Devuelve un listado de los comerciales que no han realizado ningún pedido. (Utilizando IN o NOT IN).
+
+```sql
+SELECT *
+FROM comercial com
+WHERE com.id NOT IN (SELECT p.id_comercial FROM pedido p)
+```
+
+11. Devuelve un listado de los clientes que no han realizado ningún pedido. (Utilizando EXISTS o NOT EXISTS).
+
+```sql
+SELECT *
+FROM cliente cl
+WHERE NOT EXISTS (
+    SELECT p.id_cliente 
+    FROM pedido p
+    WHERE cl.id = p.id_cliente
+)
+```
+
+12. Devuelve un listado de los comerciales que no han realizado ningún pedido. (Utilizando EXISTS o NOT EXISTS).
+
+```sql
+SELECT *
+FROM comercial com
+WHERE NOT EXISTS (
+    SELECT p.id_comercial 
+    FROM pedido p
+    WHERE com.id = p.id_comercial
+)
+```
 
 ## Tablas
 
