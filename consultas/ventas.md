@@ -23,11 +23,78 @@ FROM pedido p
 ORDER BY p.fecha DESC
 ```
 
-2. Lista los nombres y los precios de todos los productos de la tabla producto.
+2. Devuelve todos los datos de los dos pedidos de mayor valor.
 
 ```sql
-SELECT p.nombre, p.precio
-FROM producto p
+SELECT * 
+FROM pedido p
+ORDER BY p.total DESC
+LIMIT 2
+```
+
+3. Devuelve un listado con los identificadores de los clientes que han realizado algún pedido. Tenga en cuenta que no debe mostrar identificadores que estén repetidos.
+
+```sql
+SELECT DISTINCT(p.id_cliente)
+FROM pedido p
+```
+
+4. Devuelve un listado de todos los pedidos que se realizaron durante el año 2017, cuya cantidad total sea superior a 500€.
+
+```
+SELECT *
+FROM pedido p
+WHERE YEAR(p.fecha) = "2017" AND p.total>500
+```
+
+5. Devuelve un listado con el nombre y los apellidos de los comerciales que tienen una comisión entre 0.05 y 0.11.
+
+```sql
+SELECT com.id, com.nombre, com.apellido1, com.apellido2, com.comision
+FROM comercial com
+WHERE com.comision BETWEEN 0.05 AND 0.11
+```
+
+6. Devuelve el valor de la comisión de mayor valor que existe en la tabla comercial.
+
+```sql
+SELECT ROUND(MAX(com.comision), 2)
+FROM comercial com
+```
+
+7. Devuelve el identificador, nombre y primer apellido de aquellos clientes cuyo segundo apellido no es NULL. El listado deberá estar ordenado alfabéticamente por apellidos y nombre.
+
+```sql
+SELECT cl.id, cl.nombre, cl.apellido1
+FROM cliente cl
+WHERE cl.apellido2 IS NOT NULL
+ORDER BY 3, 2
+```
+
+8. Devuelve un listado de los nombres de los clientes que empiezan por A y terminan por n y también los nombres que empiezan por P. El listado deberá estar ordenado alfabéticamente.
+
+```sql
+SELECT c.nombre
+FROM cliente c
+WHERE (c.nombre LIKE 'a%' AND c.nombre LIKE '%n') OR c.nombre LIKE 'p%'
+ORDER BY 1 ASC 
+```
+
+9. Devuelve un listado de los nombres de los clientes que no empiezan por A. El listado deberá estar ordenado alfabéticamente.
+
+```sql
+SELECT cl.nombre
+FROM cliente cl
+WHERE cl.nombre NOT LIKE 'a%'
+ORDER BY 1 ASC 
+```
+
+10. Devuelve un listado con los nombres de los comerciales que terminan por 'el' u 'o'. Tenga en cuenta que se deberán eliminar los nombres repetidos.
+
+```sql
+SELECT DISTINCT c.nombre
+FROM comercial c
+WHERE c.nombre LIKE '%el' OR c.nombre LIKE '%o'
 ```
 
 ## Composición interna
