@@ -104,7 +104,7 @@ WHERE SUBSTRING(p.fecha_pago, 1, 4) = "2008"
 
 ## Subconsultas
 
-## Anexo: Tablas
+## Tablas
 
 ### Gama producto
 
