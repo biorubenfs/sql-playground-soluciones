@@ -95,6 +95,87 @@ INNER JOIN pago p ON p.codigo_cliente=cl.codigo_cliente
 WHERE SUBSTRING(p.fecha_pago, 1, 4) = "2008"
 ```
 
+9. Devuelve un listado con el código de pedido, código de cliente, fecha esperada y fecha de entrega de los pedidos que no han sido entregados a tiempo.
+
+```sql
+SELECT p.codigo_pedido, p.codigo_cliente, p.fecha_esperada, p.fecha_entrega
+FROM pedido p
+WHERE p.fecha_esperada < p.fecha_entrega
+```
+
+10. Devuelve un listado con el código de pedido, código de cliente, fecha esperada y fecha de entrega de los pedidos cuya fecha de entrega ha sido al menos dos días antes de la fecha esperada.
+
+Utilizando la función ADDDATE de MySQL.
+
+```sql
+SELECT p.codigo_pedido, p.codigo_cliente, p.fecha_esperada, p.fecha_entrega
+FROM pedido p
+WHERE p.fecha_esperada >= ADDDATE(p.fecha_entrega, INTERVAL 2 DAY)
+```
+
+Utilizando la función DATEDIFF de MySQL.
+
+```sql
+SELECT p.codigo_pedido, p.codigo_cliente, p.fecha_esperada, p.fecha_entrega
+FROM pedido p
+WHERE DATEDIFF(p.fecha_esperada, p.fecha_entrega) >= 2
+```
+
+¿Sería posible resolver esta consulta utilizando el operador de suma + o resta -?
+```
+SELECT p.codigo_pedido, p.codigo_cliente, p.fecha_esperada, p.fecha_entrega
+FROM pedido p
+WHERE p.fecha_entrega <= p.fecha_esperada - 2
+```
+
+11. Devuelve un listado de todos los pedidos que fueron rechazados en 2009.
+
+```sql
+SELECT *
+FROM pedido p
+WHERE YEAR(p.fecha_pedido) = 2009 AND p.estado="Rechazado"
+```
+
+12. Devuelve un listado de todos los pedidos que han sido entregados en el mes de enero de cualquier año.
+
+```sql
+SELECT *
+FROM pedido p
+WHERE p.estado="Entregado" AND MONTH(p.fecha_pedido) = 1
+```
+
+13. Devuelve un listado con todos los pagos que se realizaron en el año 2008 mediante Paypal. Ordene el resultado de mayor a menor.
+
+```sql
+SELECT *
+FROM pago p
+WHERE YEAR(p.fecha_pago)=2008 AND p.forma_pago="PayPal"
+ORDER BY p.total DESC
+```
+
+14. Devuelve un listado con todas las formas de pago que aparecen en la tabla pago. Tenga en cuenta que no deben aparecer formas de pago repetidas.
+
+```sql
+SELECT DISTINCT(p.forma_pago)
+FROM pago p
+```
+
+15. Devuelve un listado con todos los productos que pertenecen a la gama Ornamentales y que tienen más de 100 unidades en stock. El listado deberá estar ordenado por su precio de venta, mostrando en primer lugar los de mayor precio.
+
+```sql
+SELECT *
+FROM producto p
+WHERE p.gama = 'Ornamentales' AND p.cantidad_en_stock > 100
+ORDER BY p.precio_venta DESC
+```
+
+16. Devuelve un listado con todos los clientes que sean de la ciudad de Madrid y cuyo representante de ventas tenga el código de empleado 11 o 30.
+
+```sql
+SELECT *
+FROM cliente cl
+WHERE cl.ciudad="Madrid" AND (cl.codigo_empleado_rep_ventas IN (11, 30))
+```
 
 ## Composición interna
 
