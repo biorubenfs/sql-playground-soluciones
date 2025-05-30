@@ -178,6 +178,110 @@ WHERE cl.ciudad="Madrid" AND (cl.codigo_empleado_rep_ventas IN (11, 30))
 ```
 
 ## Composición interna
+1. Obtén un listado con el nombre de cada cliente y el nombre y apellido de su representante de ventas.
+
+```SELECT cl.nombre_cliente, em.nombre, em.apellido1
+FROM cliente cl
+INNER JOIN empleado em ON em.codigo_empleado=cl.codigo_empleado_rep_ventas
+```
+
+2. Muestra el nombre de los clientes que hayan realizado pagos junto con el nombre de sus representantes de ventas.
+
+```sql
+SELECT cl.nombre_cliente, emp.nombre, emp.apellido1
+FROM cliente cl
+INNER JOIN pago p ON cl.codigo_cliente=p.codigo_cliente
+INNER JOIN empleado emp ON cl.codigo_empleado_rep_ventas=emp.codigo_empleado
+GROUP BY p.codigo_cliente
+```
+
+3. Muestra el nombre de los clientes que no hayan realizado pagos junto con el nombre de sus representantes de ventas.
+
+```sql
+SELECT cl.nombre_cliente, emp.nombre, emp.apellido1
+FROM cliente cl
+LEFT JOIN pago p ON cl.codigo_cliente=p.codigo_cliente
+INNER JOIN empleado emp ON emp.codigo_empleado=cl.codigo_empleado_rep_ventas
+WHERE p.id_transaccion IS NULL
+```
+
+4. Devuelve el nombre de los clientes que han hecho pagos y el nombre de sus representantes junto con la ciudad de la oficina a la que pertenece el representante.
+
+```sql
+SELECT cl.nombre_cliente, emp.nombre, emp.apellido1, emp.apellido2, of.ciudad
+FROM cliente cl
+INNER JOIN pago p ON cl.codigo_cliente=p.codigo_cliente
+INNER JOIN empleado emp ON cl.codigo_empleado_rep_ventas=emp.codigo_empleado
+INNER JOIN oficina of ON of.codigo_oficina=emp.codigo_oficina
+```
+
+5. Devuelve el nombre de los clientes que no hayan hecho pagos y el nombre de sus representantes junto con la ciudad de la oficina a la que pertenece el representante.
+
+```sql
+SELECT cl.nombre_cliente, emp.nombre, emp.apellido1, emp.apellido2, of.ciudad
+FROM cliente cl
+LEFT JOIN pago p ON cl.codigo_cliente=p.codigo_cliente
+INNER JOIN empleado emp ON emp.codigo_empleado=cl.codigo_empleado_rep_ventas
+INNER JOIN oficina of ON of.codigo_oficina=emp.codigo_oficina
+WHERE p.id_transaccion IS NULL
+```
+
+6. Lista la dirección de las oficinas que tengan clientes en Fuenlabrada.
+
+```sql
+SELECT of.linea_direccion1, of.linea_direccion2, of.ciudad
+FROM cliente cl
+INNER JOIN empleado emp ON cl.codigo_empleado_rep_ventas=emp.codigo_empleado
+INNER JOIN oficina of ON of.codigo_oficina=emp.codigo_oficina
+WHERE cl.ciudad="Fuenlabrada"
+```
+
+7. Devuelve el nombre de los clientes y el nombre de sus representantes junto con la ciudad de la oficina a la que pertenece el representante.
+
+```sql
+SELECT cl.nombre_cliente, empl.nombre, empl.apellido1, empl.apellido2, of.ciudad
+FROM cliente cl
+INNER JOIN empleado empl ON empl.codigo_empleado=cl.codigo_empleado_rep_ventas
+INNER JOIN oficina of ON empl.codigo_oficina=of.codigo_oficina
+```
+
+8. Devuelve un listado con el nombre de los empleados junto con el nombre de sus jefes.
+
+```sql
+SELECT emp.nombre AS NOMBRE_EMPLEADO, emp.apellido1, emp.apellido2, emp2.nombre AS NOMBRE_JEFE, emp2.apellido1, emp2.apellido2
+FROM empleado emp
+INNER JOIN empleado emp2 ON emp.codigo_jefe=emp2.codigo_empleado
+```
+
+Se podría mostrar también al jefe, cambiando el `inner` por un `left`
+
+9. Devuelve un listado que muestre el nombre de cada empleados, el nombre de su jefe y el nombre del jefe de sus jefe.
+
+```sql
+SELECT emp.nombre AS NOMBRE_EMPLEADO, emp.apellido1, emp.apellido2, emp2.nombre AS NOMBRE_JEFE, emp2.apellido1, emp2.apellido2, emp3.nombre AS NOMBRE_SUPERJEFE, emp3.apellido1, emp3.apellido2
+FROM empleado emp
+INNER JOIN empleado emp2 ON emp.codigo_jefe=emp2.codigo_empleado
+INNER JOIN empleado emp3 ON emp2.codigo_jefe=emp3.codigo_empleado
+```
+
+10. Devuelve el nombre de los clientes a los que no se les ha entregado a tiempo un pedido.
+
+```sql
+SELECT cl.nombre_cliente, p.fecha_entrega, p.fecha_esperada
+FROM pedido p
+INNER JOIN cliente cl ON cl.codigo_cliente=p.codigo_cliente
+WHERE p.fecha_entrega>p.fecha_esperada
+```
+
+11. Devuelve un listado de las diferentes gamas de producto que ha comprado cada cliente.
+
+```sql
+SELECT DISTINCT pr.gama, c.nombre_cliente
+FROM cliente c 
+INNER JOIN pedido pe ON c.codigo_cliente = pe.codigo_cliente
+INNER JOIN detalle_pedido dp ON dp.codigo_pedido = pe.codigo_pedido
+INNER JOIN producto pr ON pr.codigo_producto = dp.codigo_producto
+```
 
 ## Composición externa
 
