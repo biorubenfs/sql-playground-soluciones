@@ -285,6 +285,99 @@ INNER JOIN producto pr ON pr.codigo_producto = dp.codigo_producto
 
 ## Composición externa
 
+1. Devuelve un listado que muestre solamente los clientes que no han realizado ningún pago.
+
+```sql
+SELECT *
+FROM cliente cl
+LEFT JOIN pago p ON p.codigo_cliente=cl.codigo_cliente
+WHERE p.id_transaccion IS NULL
+```
+
+2. Devuelve un listado que muestre solamente los clientes que no han realizado ningún pedido.
+
+```sql
+SELECT *
+FROM cliente cl
+LEFT JOIN pedido p ON p.codigo_cliente=cl.codigo_cliente
+WHERE p.codigo_pedido IS NULL
+```
+
+3. Devuelve un listado que muestre los clientes que no han realizado ningún pago y los que no han realizado ningún pedido.
+
+No sé muy bien qué es lo que pide aquí, pero:
+
+```sql
+SELECT cl.nombre_cliente, 'SIN PEDIDOS' AS TIPO
+FROM cliente cl
+LEFT JOIN pedido pe ON pe.codigo_cliente=cl.codigo_cliente
+WHERE pe.codigo_cliente IS NULL 
+UNION
+SELECT cl2.nombre_cliente, 'SIN PAGOS' AS TIPO
+FROM cliente cl2
+LEFT JOIN pago pa ON pa.codigo_cliente=cl2.codigo_cliente
+WHERE pa.codigo_cliente IS NULL
+```
+
+o bien:
+
+```sql
+SELECT cl.nombre_cliente
+FROM cliente cl
+LEFT JOIN pedido pe ON pe.codigo_cliente=cl.codigo_cliente
+LEFT JOIN pago pa ON pa.codigo_cliente=cl.codigo_cliente
+WHERE pe.codigo_cliente IS NULL AND pa.codigo_cliente IS NULL
+```
+
+4. Devuelve un listado que muestre solamente los empleados que no tienen una oficina asociada.
+
+```sql
+SELECT *
+FROM empleado emp
+WHERE emp.codigo_oficina IS NULL
+```
+
+5. Devuelve un listado que muestre solamente los empleados que no tienen un cliente asociado.
+
+```sql
+SELECT *
+FROM empleado emp
+LEFT JOIN cliente cl ON cl.codigo_empleado_rep_ventas=emp.codigo_empleado
+WHERE cl.codigo_cliente IS NULL
+```
+
+6. Devuelve un listado que muestre solamente los empleados que no tienen un cliente asociado junto con los datos de la oficina donde trabajan.
+
+```sql
+SELECT emp.nombre, emp.apellido1, emp.apellido2, of.telefono
+FROM empleado emp
+LEFT JOIN cliente cl ON cl.codigo_empleado_rep_ventas=emp.codigo_empleado
+INNER JOIN oficina of ON of.codigo_oficina=emp.codigo_oficina
+WHERE cl.codigo_cliente IS NULL
+```
+
+7. Devuelve un listado que muestre los empleados que no tienen una oficina asociada y los que no tienen un cliente asociado.
+
+```sql
+SELECT emp.nombre, emp.apellido1, emp.apellido2
+FROM empleado emp
+WHERE emp.codigo_oficina IS NULL
+UNION
+SELECT emp2.nombre, emp2.apellido1, emp2.apellido2
+FROM empleado emp2
+LEFT JOIN cliente cl ON cl.codigo_empleado_rep_ventas=emp2.codigo_empleado
+WHERE cl.codigo_cliente IS NULL
+```
+
+8. Devuelve un listado de los productos que nunca han aparecido en un pedido.
+
+```sqñ
+SELECT *
+FROM producto prod
+LEFT JOIN detalle_pedido dp ON dp.codigo_producto=prod.codigo_producto
+WHERE dp.codigo_pedido IS NULL
+```
+
 ## Consultas resumen
 
 ## Subconsultas
