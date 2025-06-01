@@ -25,7 +25,7 @@ FROM producto p
 
 2. Lista los nombres y los precios de todos los productos de la tabla `producto`.
 
-```
+```sql
 SELECT p.nombre, p.precio
 FROM producto p
 ```
@@ -39,7 +39,7 @@ FROM producto
 
 4. Lista el nombre de los productos, el precio en euros y el precio en dólares estadounidenses (USD).
 
-```
+```sql
 SELECT p.nombre, p.precio AS EUROS, p.precio*1.15 AS DOLARES
 FROM producto p
 ```
@@ -72,7 +72,7 @@ FROM producto p
 
 1. Devuelve una lista con el nombre del producto, precio y nombre de fabricante de todos los productos de la base de datos.
 
-```
+```sql
 SELECT p.nombre, p.precio, f.nombre
 FROM producto p
 INNER JOIN fabricante f ON f.id=p.id_fabricante
@@ -88,7 +88,7 @@ INNER JOIN fabricante f ON f.id=p.id_fabricante
 
 ### Producto
 
-| id  | producto                            | precio  | stock |
+| id  | producto                            | precio  | id_fabricante |
 |-----|-------------------------------------|---------|--------|
 | 1   | Disco duro SATA3 1TB                | 86.99   | 5      |
 | 2   | Memoria RAM DDR4 8GB                | 120     | 6      |
