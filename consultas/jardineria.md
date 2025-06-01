@@ -432,12 +432,46 @@ WHERE cl.codigo_cliente IS NULL
 
 ### Gama producto
 
+| gama         | descripcion_texto                              | descripcion_html | imagen |
+|--------------|------------------------------------------------|------------------|--------|
+| Aromáticas   | Plantas aromáticas                             |                  |        |
+| Frutales     | Árboles pequeños de producción frutal          |                  |        |
+| Herbaceas    | Plantas para jardín decorativas                |                  |        |
+| Herramientas | Herramientas para todo tipo de acción          |                  |        |
+| Ornamentales | Plantas vistosas para la decoración del jardín |                  |        |
+
 
 ### Producto
 
+| código_producto | nombre                  | gama        | dimensiones | proveedor           | descripcion                                                                                                                                                                                                                                  | cantidad_en_stock | precio_venta | precio_proveedor |
+|-----------------|-------------------------|-------------|-------------|----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------|--------------|-------------------|
+| 11679           | Sierra de Poda 400MM    | Herramientas| 0,258       | HiperGarden Tools   | Gracias a la poda se consigue manipular la naturaleza, facilitando el crecimiento equilibrado y la floración. Herramientas adecuadas son vitales.                                                                                           | 15                | 14.00        | 11.00             |
+| 21636           | Pala                    | Herramientas| 0,156       | HiperGarden Tools   | Palas de acero con buena penetración en terrenos compactos.                                                                                                                                                                                  | 15                | 14.00        | 13.00             |
+| 22225           | Rastrillo de Jardín     | Herramientas| 1,064       | HiperGarden Tools   | Rastillo útil para eliminar elementos no deseados del jardín.                                                                                                                                                                                | 15                | 12.00        | 11.00             |
+| 30310           | Azadón                  | Herramientas| 0,168       | HiperGarden Tools   | Herramienta de acero con diseño ergonómico y protección contra la corrosión.                                                                                                                                                                 | 15                | 12.00        | 11.00             |
+| AR-001          | Ajedrea                 | Aromáticas  | 15-20       | Murcia Seasons       | Planta usada fresca o seca para condimentar diversos platos.                                                                                                                                                                                 | 140               | 1.00         | 0.00              |
+| AR-002          | Lavándula Dentata       | Aromáticas  | 15-20       | Murcia Seasons       | Mata aromática usada en jardinería. Ahuyenta insectos y es decorativa.                                                                                                                                                                       | 140               | 1.00         | 0.00              |
+| AR-003          | Mejorana                | Aromáticas  | 15-20       | Murcia Seasons       | Hierba con sabor dulce y aroma delicado, usada en muchas recetas.                                                                                                                                                                            | 140               | 1.00         | 0.00              |
+| AR-004          | Melissa                 | Aromáticas  | 15-20       | Murcia Seasons       | Planta perenne con aroma a limón, fácil de cultivar y con múltiples usos.                                                                                                                                                                    | 140               | 1.00         | 0.00              |
+| AR-005          | Mentha Sativa           | Aromáticas  | 15-20       | Murcia Seasons       | Hierbabuena, planta perenne muy conocida. Necesita agua abundante y vive bien en semisombra.                                                                                                                                                | 140               | 1.00         | 0.00              |
+| AR-006          | Petrosilium Hortense    | Aromáticas  | 15-20       | Murcia Seasons       | Perejil común o rizado. Usado como condimento, adorno o en ensaladas.                                                                                                                                                                        | 140               | 1.00         | 0.00              |
+...
 
 ### Detalle Pedido
 
+| codigo_pedido | codigo_producto | cantidad | precio_unidad | numero_linea |
+|----------------|------------------|----------|----------------|---------------|
+| 1              | FR-67            | 10       | 70.00          | 3             |
+| 1              | OR-127           | 40       | 4.00           | 1             |
+| 1              | OR-141           | 25       | 4.00           | 2             |
+| 1              | OR-241           | 15       | 19.00          | 4             |
+| 1              | OR-99            | 23       | 14.00          | 5             |
+| 2              | FR-4             | 3        | 29.00          | 6             |
+| 2              | FR-40            | 7        | 8.00           | 7             |
+| 2              | OR-140           | 50       | 4.00           | 3             |
+| 2              | OR-141           | 20       | 5.00           | 2             |
+| 2              | OR-159           | 12       | 6.00           | 5             |
+...
 
 ### Cliente
 
@@ -455,6 +489,19 @@ WHERE cl.codigo_cliente IS NULL
 ...
 
 ### Pago
+| codigo_cliente | forma_pago | id_transaccion  | fecha_pago | total    |
+|----------------|------------|------------------|-------------|----------|
+| 1              | PayPal     | ak-std-000001     | 2008-11-10  | 2000.00  |
+| 1              | PayPal     | ak-std-000002     | 2008-12-10  | 2000.00  |
+| 3              | PayPal     | ak-std-000003     | 2009-01-16  | 5000.00  |
+| 3              | PayPal     | ak-std-000004     | 2009-02-16  | 5000.00  |
+| 3              | PayPal     | ak-std-000005     | 2009-02-19  | 926.00   |
+| 4              | PayPal     | ak-std-000006     | 2007-01-08  | 20000.00 |
+| 4              | PayPal     | ak-std-000007     | 2007-01-08  | 20000.00 |
+| 4              | PayPal     | ak-std-000008     | 2007-01-08  | 20000.00 |
+| 4              | PayPal     | ak-std-000009     | 2007-01-08  | 20000.00 |
+| 4              | PayPal     | ak-std-000010     | 2007-01-08  | 1849.00  |
+...
 
 
 ### Pedido
