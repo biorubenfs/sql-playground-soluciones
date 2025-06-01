@@ -371,11 +371,57 @@ WHERE cl.codigo_cliente IS NULL
 
 8. Devuelve un listado de los productos que nunca han aparecido en un pedido.
 
-```sqñ
+```sql
 SELECT *
 FROM producto prod
 LEFT JOIN detalle_pedido dp ON dp.codigo_producto=prod.codigo_producto
 WHERE dp.codigo_pedido IS NULL
+```
+9. Devuelve un listado de los productos que nunca han aparecido en un pedido. El resultado debe mostrar el nombre, la descripción y la imagen del producto
+
+```sql
+SELECT p.nombre, gp.descripcion_texto, gp.imagen
+FROM producto p
+LEFT JOIN detalle_pedido dp ON p.codigo_producto=dp.codigo_producto
+INNER JOIN gama_producto gp ON gp.gama=p.gama
+WHERE dp.codigo_pedido IS NULL
+```
+
+10.Devuelve las oficinas donde no trabajan ninguno de los empleados que hayan sido los representantes de ventas de algún cliente que haya realizado la compra de algún producto de la gama Frutales.
+
+```sql
+SELECT *
+FROM oficina of
+WHERE of.codigo_oficina NOT IN (
+  SELECT DISTINCT emp.codigo_oficina
+  FROM producto p
+  INNER JOIN gama_producto gp ON p.gama=gp.gama
+  INNER JOIN detalle_pedido dp ON p.codigo_producto=dp.codigo_producto
+  INNER JOIN pedido pe ON pe.codigo_pedido=dp.codigo_pedido
+  INNER JOIN cliente cl ON cl.codigo_cliente=pe.codigo_cliente
+  INNER JOIN empleado emp ON cl.codigo_empleado_rep_ventas=emp.codigo_empleado
+  WHERE gp.gama="Frutales"
+)
+```
+
+11. Devuelve un listado con los clientes que han realizado algún pedido pero no han realizado ningún pago.
+
+```sql
+SELECT DISTINCT cl.codigo_cliente, cl.nombre_cliente
+FROM cliente cl
+LEFT JOIN pago pa ON pa.codigo_cliente=cl.codigo_cliente
+INNER JOIN pedido p ON p.codigo_cliente=cl.codigo_cliente
+WHERE pa.id_transaccion IS NULL
+```
+
+12.Devuelve un listado con los datos de los empleados que no tienen clientes asociados y el nombre de su jefe asociado.
+
+```sql
+SELECT emp.nombre, emp.apellido1, emp.apellido2, emp2.nombre, emp2.apellido1, emp2.apellido2
+FROM empleado emp
+LEFT JOIN cliente cl ON cl.codigo_empleado_rep_ventas=emp.codigo_empleado
+INNER JOIN empleado emp2 ON emp.codigo_jefe=emp2.codigo_empleado
+WHERE cl.codigo_cliente IS NULL
 ```
 
 ## Consultas resumen
