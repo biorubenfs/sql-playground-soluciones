@@ -206,6 +206,94 @@ FROM producto
 WHERE precio BETWEEN 60 AND 200
 ```
 
+26. Lista todos los productos que tengan un precio mayor que 200€ y que el código de fabricante sea igual a 6.
+
+```sql
+SELECT p.nombre
+FROM producto p
+WHERE p.precio > 200 AND p.id_fabricante = 6
+```
+
+27. Lista todos los productos donde el código de fabricante sea 1, 3 o 5. Sin utilizar el operador IN.
+
+```sql
+SELECT p.nombre
+FROM producto p
+WHERE p.id_fabricante = 1 OR p.id_fabricante = 3 OR p.id_fabricante = 5
+```
+
+28. Lista todos los productos donde el código de fabricante sea 1, 3 o 5. Utilizando el operador IN.
+
+```sql
+SELECT p.nombre
+FROM producto p
+WHERE p.id_fabricante IN (1, 3, 5)
+```
+
+29. Lista el nombre y el precio de los productos en céntimos (Habrá que multiplicar por 100 el valor del precio). Cree un alias para la columna que contiene el precio que se llame céntimos.
+
+```sql
+SELECT nombre, (precio * 100) AS Céntimos
+FROM producto 
+```
+
+30. Lista los nombres de los fabricantes cuyo nombre empiece por la letra S.
+
+```
+SELECT nombre 
+FROM fabricante 
+WHERE nombre LIKE "s%"
+```
+
+31. Lista los nombres de los fabricantes cuyo nombre termine por la vocal e.
+
+```sql
+SELECT nombre 
+FROM fabricante 
+WHERE nombre LIKE "%e"
+```
+
+32. Lista los nombres de los fabricantes cuyo nombre contenga el carácter w.
+
+```sql
+SELECT nombre 
+FROM fabricante 
+WHERE nombre LIKE "%w%"
+```
+
+33. Lista los nombres de los fabricantes cuyo nombre sea de 4 caracteres.
+
+```sql
+SELECT nombre 
+FROM fabricante 
+WHERE LENGTH(nombre) = 4
+```
+
+34. Devuelve una lista con el nombre de todos los productos que contienen la cadena Portátil en el nombre.
+
+```sql
+SELECT nombre 
+FROM producto 
+WHERE nombre LIKE "%Portátil%"
+```
+
+35. Devuelve una lista con el nombre de todos los productos que contienen la cadena Monitor en el nombre y tienen un precio inferior a 215 €.
+
+```sql
+SELECT nombre 
+FROM producto 
+WHERE nombre LIKE "%Monitor%" AND precio < 215
+```
+
+36. Lista el nombre y el precio de todos los productos que tengan un precio mayor o igual a 180€. Ordene el resultado en primer lugar por el precio (en orden descendente) y en segundo lugar por el nombre (en orden ascendente).
+
+```sql
+SELECT nombre, precio
+FROM producto
+WHERE precio >= 180
+ORDER BY precio DESC, nombre ASC
+```
+
 ## Composición interna
 
 1. Devuelve una lista con el nombre del producto, precio y nombre de fabricante de todos los productos de la base de datos.
