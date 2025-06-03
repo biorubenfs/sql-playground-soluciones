@@ -67,6 +67,144 @@ FROM producto p
 
 8. Lista el nombre de todos los fabricantes en una columna, y en otra columna obtenga en mayúsculas los dos primeros caracteres del nombre del fabricante.
 
+```sql
+SELECT f.Nombre, UPPER(SUBSTR(f.nombre, 1, 2))
+FROM fabricante f
+```
+
+9. Lista los nombres y los precios de todos los productos de la tabla producto, redondeando el valor del precio.
+
+```sql
+SELECT nombre, ROUND(precio) AS 'Precio'
+FROM producto
+```
+
+10. Lista los nombres y los precios de todos los productos de la tabla producto, truncando el valor del precio para mostrarlo sin ninguna cifra decimal.
+
+```sql
+SELECT nombre, TRUNCATE(precio, 0) AS 'Precio'
+FROM producto
+```
+
+11. Lista el código de los fabricantes que tienen productos en la tabla producto.
+
+```sql
+SELECT id_fabricante
+FROM producto
+```
+
+12. Lista el código de los fabricantes que tienen productos en la tabla producto, eliminando códigos repetidos.
+
+```sql
+SELECT id_fabricante
+FROM producto
+```
+
+13. Lista los nombres de los fabricantes ordenados de forma ascendente.
+
+```sql
+SELECT nombre 
+FROM fabricante
+ORDER BY nombre ASC
+```
+
+14. Lista los nombres de los fabricantes ordenados de forma descendente.
+
+```sql
+SELECT nombre 
+FROM fabricante
+ORDER BY nombre DESC
+```
+
+15. Lista los nombres de los productos ordenados en primer lugar por el nombre de forma ascendente y en segundo lugar por el precio de forma descendente.
+
+```sql
+SELECT nombre 
+FROM producto
+ORDER BY nombre ASC, PRECIO DESC
+```
+
+16. Devuelve una lista con las 5 primeras filas de la tabla fabricante.
+
+```sql
+SELECT *
+FROM fabricante
+LIMIT 5
+```
+
+17. Devuelve una lista con 2 filas a partir de la cuarta fila de la tabla fabricante. La cuarta fila también se debe incluir en la respuesta.
+
+```sql
+SELECT *
+FROM fabricante
+LIMIT 3, 2
+```
+
+18. Lista el nombre y el precio del producto más barato. (Utilice solamente las cláusulas ORDER BY y LIMIT)
+
+```sql
+SELECT nombre, precio
+FROM producto
+ORDER BY precio ASC
+LIMIT 1
+```
+
+19. Lista el nombre y el precio del producto más caro. (Utilice solamente las cláusulas ORDER BY y LIMIT)
+
+```sql
+SELECT nombre, precio
+FROM producto
+ORDER BY precio DESC
+LIMIT 1
+```
+
+20. Lista el nombre de todos los productos del fabricante cuyo código de fabricante es igual a 2.
+
+```sql
+SELECT nombre 
+FROM producto p
+WHERE p.id_fabricante = 2
+```
+
+21. Lista el nombre de los productos que tienen un precio menor o igual a 120€.
+
+```sql
+SELECT nombre
+FROM producto
+WHERE precio <= 120
+```
+
+22. Lista el nombre de los productos que tienen un precio mayor o igual a 400€.
+
+```sql
+SELECT nombre
+FROM producto
+WHERE precio >= 400
+```
+
+23. Lista el nombre de los productos que no tienen un precio mayor o igual a 400€.
+
+```sql
+SELECT nombre
+FROM producto
+WHERE NOT (precio >= 400)
+```
+
+24. Lista todos los productos que tengan un precio entre 80€ y 300€. Sin utilizar el operador BETWEEN.
+
+```sql
+SELECT nombre
+FROM producto
+WHERE precio > 80 AND precio < 300
+```
+
+25. Lista todos los productos que tengan un precio entre 60€ y 200€. Utilizando el operador BETWEEN.
+
+```sql
+SELECT nombre
+FROM producto
+WHERE precio BETWEEN 60 AND 200
+```
 
 ## Composición interna
 
