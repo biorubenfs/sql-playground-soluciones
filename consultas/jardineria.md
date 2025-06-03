@@ -180,7 +180,8 @@ WHERE cl.ciudad="Madrid" AND (cl.codigo_empleado_rep_ventas IN (11, 30))
 ## Composición interna
 1. Obtén un listado con el nombre de cada cliente y el nombre y apellido de su representante de ventas.
 
-```SELECT cl.nombre_cliente, em.nombre, em.apellido1
+```sql
+SELECT cl.nombre_cliente, em.nombre, em.apellido1
 FROM cliente cl
 INNER JOIN empleado em ON em.codigo_empleado=cl.codigo_empleado_rep_ventas
 ```
