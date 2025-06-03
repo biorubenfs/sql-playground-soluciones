@@ -427,6 +427,88 @@ WHERE cl.codigo_cliente IS NULL
 
 ## Consultas resumen
 
+1. ¿Cuántos empleados hay en la compañía?
+
+```sql
+SELECT COUNT(*)
+FROM empleado
+```
+
+2. ¿Cuántos clientes tiene cada país?
+
+```sql
+SELECT cl.pais, COUNT(*) AS TOTAL_CLIENTES
+FROM cliente cl
+GROUP BY cl.pais
+```
+
+3. ¿Cuál fue el pago medio en 2009?
+
+```sql
+SELECT AVG(total)
+FROM pago
+WHERE YEAR(pago.fecha_pago)=2009
+```
+
+4. ¿Cuántos pedidos hay en cada estado? Ordena el resultado de forma descendente por el número de pedidos.
+
+```sql
+SELECT pe.estado, COUNT(*)
+FROM pedido pe
+GROUP BY pe.estado
+```
+
+5. Calcula el precio de venta del producto más caro y más barato en una misma consulta.
+
+```
+SELECT MAX(precio_venta) AS "MAX", MIN(precio_venta) AS "MIN"
+FROM producto
+```
+
+6. Calcula el número de clientes que tiene la empresa.
+
+```sql
+SELECT COUNT(*)
+FROM cliente
+```
+
+7. ¿Cuántos clientes existen con domicilio en la ciudad de Madrid?
+
+```sql
+SELECT COUNT(*)
+FROM cliente
+WHERE ciudad="Madrid"
+```
+
+8. ¿Calcula cuántos clientes tiene cada una de las ciudades que empiezan por M?
+
+```sql
+SELECT ciudad, COUNT(*)
+FROM cliente
+WHERE ciudad LIKE 'M%'
+GROUP BY ciudad
+```
+
+9. Devuelve el nombre de los representantes de ventas y el número de clientes al que atiende cada uno.
+
+```sql
+SELECT emp.nombre, emp.apellido1, emp.apellido2, COUNT(*) AS TOTAL_CLIENTES
+FROM cliente cl
+LEFT JOIN empleado emp ON emp.codigo_empleado=cl.codigo_empleado_rep_ventas
+GROUP BY emp.codigo_empleado
+```
+
+10. Calcula el número de clientes que no tiene asignado representante de ventas.
+
+```sql
+SELECT COUNT(*) AS CLIENTES_SIN_REPRESENTANTE
+FROM cliente cl
+LEFT JOIN empleado emp ON emp.codigo_empleado=cl.codigo_empleado_rep_ventas
+WHERE cl.codigo_empleado_rep_ventas IS NULL
+```
+
+
+
 ## Subconsultas
 
 ## Tablas
