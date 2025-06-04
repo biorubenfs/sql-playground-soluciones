@@ -507,7 +507,94 @@ LEFT JOIN empleado emp ON emp.codigo_empleado=cl.codigo_empleado_rep_ventas
 WHERE cl.codigo_empleado_rep_ventas IS NULL
 ```
 
+11. Calcula la fecha del primer y último pago realizado por cada uno de los clientes. El listado deberá mostrar el nombre y los apellidos de cada cliente.
 
+```sql
+SELECT cl.nombre_cliente, MIN(p.fecha_pago) AS PAGO_MAS_ANTIGUO, MAX(p.fecha_pago) AS PAGO_MAS_RECIENTE
+FROM cliente cl
+INNER JOIN pago p ON p.codigo_cliente=cl.codigo_cliente
+GROUP BY cl.codigo_cliente
+```
+
+12. Calcula el número de productos diferentes que hay en cada uno de los pedidos.
+
+```sql
+SELECT pe.codigo_pedido, COUNT(DISTINCT dp.codigo_producto) AS TOTAL_PRODUCTOS_DIFERENTES
+FROM pedido pe
+INNER JOIN detalle_pedido dp ON dp.codigo_pedido=pe.codigo_pedido
+GROUP BY pe.codigo_pedido
+```
+
+13. Calcula la suma de la cantidad total de todos los productos que aparecen en cada uno de los pedidos.
+
+```sql
+SELECT dp.codigo_pedido, SUM(dp.cantidad)
+FROM detalle_pedido dp
+GROUP BY dp.codigo_pedido
+```
+
+14. Devuelve un listado de los 20 productos más vendidos y el número total de unidades que se han vendido de cada uno. El listado deberá estar ordenado por el número total de unidades vendidas.
+
+```sql
+SELECT p.nombre, SUM(dp.cantidad) AS UNIDADES_VENDIDAS
+FROM detalle_pedido dp
+INNER JOIN producto p ON p.codigo_producto=dp.codigo_producto
+GROUP BY (dp.codigo_producto)
+ORDER BY UNIDADES_VENDIDAS DESC
+LIMIT 20
+```
+
+15. La facturación que ha tenido la empresa en toda la historia, indicando la base imponible, el IVA y el total facturado. La base imponible se calcula sumando el coste del producto por el número de unidades vendidas de la tabla detalle_pedido. El IVA es el 21 % de la base imponible, y el total la suma de los dos campos anteriores.
+
+```sql
+SELECT 
+    SUM(dp.cantidad*dp.precio_unidad) AS BASE_IMPONIBLE, 
+    SUM(dp.cantidad*dp.precio_unidad*0.21) AS IVA, 
+    SUM(dp.precio_unidad * dp.cantidad + ((dp.precio_unidad * dp.cantidad) * 0.21)) AS TOTAL
+    // SUM(dp.cantidad*dp.precio_unidad*1.21) AS TOTAL
+FROM detalle_pedido dp
+```
+
+16. La misma información que en la pregunta anterior, pero agrupada por código de producto.
+
+```sql
+SELECT dp.codigo_producto,
+    SUM(dp.cantidad*dp.precio_unidad) AS BASE_IMPONIBLE, 
+    SUM(dp.cantidad*dp.precio_unidad*0.21) AS IVA, 
+    SUM(dp.precio_unidad * dp.cantidad + ((dp.precio_unidad * dp.cantidad) * 0.21)) AS TOTAL
+FROM detalle_pedido dp
+GROUP BY dp.codigo_producto
+```
+
+17. La misma información que en la pregunta anterior, pero agrupada por código de producto filtrada por los códigos que empiecen por OR.
+
+```sql
+SELECT dp.codigo_producto,
+    SUM(dp.cantidad*dp.precio_unidad) AS BASE_IMPONIBLE, 
+    SUM(dp.cantidad*dp.precio_unidad*0.21) AS IVA, 
+    SUM(dp.precio_unidad * dp.cantidad + ((dp.precio_unidad * dp.cantidad) * 0.21)) AS TOTAL
+FROM detalle_pedido dp
+WHERE dp.codigo_producto LIKE "OR%"
+GROUP BY dp.codigo_producto
+```
+
+18. Lista las ventas totales de los productos que hayan facturado más de 3000 euros. Se mostrará el nombre, unidades vendidas, total facturado y total facturado con impuestos (21% IVA).
+
+```sql
+SELECT p.nombre, SUM(dp.cantidad) AS TOTAL_UNIDADES, SUM(dp.cantidad*dp.precio_unidad) AS TOTAL_FACTURADO, SUM(dp.cantidad*dp.precio_unidad*1.21) AS TOTAL_FACTURADO_IVA_INCL
+FROM detalle_pedido dp
+INNER JOIN producto p ON p.codigo_producto=dp.codigo_producto
+GROUP BY p.codigo_producto
+HAVING TOTAL_FACTURADO>3000
+```
+
+19. Muestre la suma total de todos los pagos que se realizaron para cada uno de los años que aparecen en la tabla pagos.
+
+```sql
+SELECT YEAR(p.fecha_pago), SUM(p.total)
+FROM pago p
+GROUP BY YEAR(p.fecha_pago)
+```
 
 ## Subconsultas
 
