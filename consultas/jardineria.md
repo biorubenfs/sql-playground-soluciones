@@ -460,7 +460,7 @@ GROUP BY pe.estado
 
 5. Calcula el precio de venta del producto más caro y más barato en una misma consulta.
 
-```
+```sql
 SELECT MAX(precio_venta) AS "MAX", MIN(precio_venta) AS "MIN"
 FROM producto
 ```
@@ -597,6 +597,102 @@ GROUP BY YEAR(p.fecha_pago)
 ```
 
 ## Subconsultas
+
+1. Devuelve el nombre del cliente con mayor límite de crédito (sin utilizra ORDER BY).
+
+```sql
+SELECT c.nombre_cliente
+FROM cliente c
+WHERE c.limite_credito = (SELECT MAX(c.limite_credito)           
+                          FROM cliente c)
+```
+
+2. Devuelve el nombre del producto que tenga el precio de venta más caro.
+
+```sql
+SELECT *
+FROM producto p
+WHERE p.precio_venta = (SELECT MAX(p2.precio_venta) FROM producto p2)
+```
+
+3. Devuelve el nombre del producto del que se han vendido más unidades. (Tenga en cuenta que tendrá que calcular cuál es el número total de unidades que se han vendido de cada producto a partir de los datos de la tabla detalle_pedido)
+
+```sql
+SELECT * 
+FROM producto p
+WHERE p.codigo_producto = (
+    SELECT dp.codigo_producto
+    FROM detalle_pedido dp
+    GROUP BY dp.codigo_producto
+    ORDER BY SUM(dp.cantidad) DESC
+    LIMIT 1
+)
+```
+
+4. Los clientes cuyo límite de crédito sea mayor que los pagos que haya realizado. (Sin utilizar INNER JOIN).
+
+```sql
+SELECT cl.nombre_cliente, cl.limite_credito
+FROM cliente cl
+WHERE cl.limite_credito > (
+    SELECT SUM(p.total) 
+    FROM pago p 
+    WHERE p.codigo_cliente=cl.codigo_cliente
+)
+```
+
+5. Devuelve el producto que más unidades tiene en stock.
+
+```sql
+SELECT p.nombre, p.cantidad_en_stock
+FROM producto p
+WHERE p.cantidad_en_stock = (SELECT MAX(p2.cantidad_en_stock) FROM producto p2)
+```
+
+6. Devuelve el producto que menos unidades tiene en stock.
+
+```sql
+SELECT p.nombre, p.cantidad_en_stock
+FROM producto p
+WHERE p.cantidad_en_stock = (SELECT MIN(p2.cantidad_en_stock) FROM producto p2)
+```
+
+7. Devuelve el nombre, los apellidos y el email de los empleados que están a cargo de Alberto Soria.
+
+```sql
+SELECT *
+FROM empleado emp
+WHERE emp.codigo_jefe = (
+    SELECT emp2.codigo_empleado
+    FROM empleado emp2
+    WHERE emp2.nombre="Alberto" AND emp2.apellido1="Soria"
+)
+```
+
+8. Devuelve el nombre del cliente con mayor límite de crédito.
+
+```sql
+SELECT cl.nombre_cliente
+FROM cliente cl
+WHERE cl.limite_credito = (SELECT MAX(cl2.limite_credito) FROM cliente cl2)
+```
+
+9. Devuelve el nombre del producto que tenga el precio de venta más caro.
+
+```sql
+SELECT *
+FROM producto p
+WHERE p.precio_venta = (SELECT MAX(p2.precio_venta) FROM producto p2)
+```
+
+
+10. Devuelve el producto que menos unidades tiene en stock.
+
+```sql
+SELECT p.nombre, p.cantidad_en_stock
+FROM producto p
+WHERE p.cantidad_en_stock = (SELECT MIN(p2.cantidad_en_stock) FROM producto p2)
+```
 
 ## Tablas
 
