@@ -331,7 +331,81 @@ ORDER BY p.precio
 LIMIT 1
 ```
 
-5. 
+5. Devuelve el nombre del producto, su precio y el nombre de su fabricante, del producto más caro.
+
+```sql
+SELECT p.nombre, p.precio, f.nombre
+FROM producto p
+INNER JOIN fabricante f ON f.id=p.id_fabricante
+ORDER BY p.precio DESC 
+LIMIT 1
+```
+
+6. Devuelve una lista de todos los productos del fabricante Lenovo.
+
+```sql
+SELECT *
+FROM producto p
+INNER JOIN fabricante f ON f.id=p.id_fabricante
+WHERE f.nombre="Lenovo"
+```
+
+7. Devuelve una lista de todos los productos del fabricante Crucial que tengan un precio mayor que 200€.
+
+```sql
+SELECT *
+FROM producto p
+INNER JOIN fabricante f ON f.id=p.id_fabricante
+WHERE f.nombre="Crucial" AND p.precio>200
+```
+
+8. Devuelve un listado con todos los productos de los fabricantes Asus, Hewlett-Packardy Seagate. Sin utilizar el operador IN.
+
+```sql
+SELECT *
+FROM producto p
+INNER JOIN fabricante f ON f.id=p.id_fabricante
+WHERE f.nombre="Asus" OR f.nombre="Hewlett-Packard" OR f.nombre="Seagate"
+```
+
+10. Devuelve un listado con el nombre y el precio de todos los productos de los fabricantes cuyo nombre termine por la vocal e.
+
+```sql
+SELECT *
+FROM producto p
+INNER JOIN fabricante f ON f.id=p.id_fabricante
+WHERE f.nombre LIKE "%e"
+```
+
+11. Devuelve un listado con el nombre y el precio de todos los productos cuyo nombre de fabricante contenga el carácter w en su nombre.
+
+```sql
+SELECT *
+FROM producto p
+INNER JOIN fabricante f ON f.id=p.id_fabricante
+WHERE f.nombre LIKE "%w%"
+```
+
+12. Devuelve un listado con el nombre de producto, precio y nombre de fabricante, de todos los productos que tengan un precio mayor o igual a 180€. Ordene el resultado en primer lugar por el precio (en orden descendente) y en segundo lugar por el nombre (en orden ascendente)
+
+```sql
+SELECT *
+FROM producto p
+INNER JOIN fabricante f ON f.id=p.id_fabricante
+WHERE p.precio >= 180
+ORDER BY p.precio DESC, p.nombre ASC
+```
+
+13. Devuelve un listado con el identificador y el nombre de fabricante, solamente de aquellos fabricantes que tienen productos asociados en la base de datos.
+
+```sql
+SELECT DISTINCT f.id, f.nombre
+FROM fabricante f
+INNER JOIN producto p ON f.id=p.id_fabricante
+```
+
+
+
 
 ## Composición externa
 
