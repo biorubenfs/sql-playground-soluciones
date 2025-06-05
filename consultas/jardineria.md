@@ -746,6 +746,94 @@ WHERE e.codigo_empleado NOT IN (
 
 16. Devuelve las oficinas donde no trabajan ninguno de los empleados que hayan sido los representantes de ventas de algún cliente que haya realizado la compra de algún producto de la gama Frutales.
 
+```sql
+SELECT o.codigo_oficina
+FROM oficina o
+WHERE o.codigo_oficina NOT IN 
+        (SELECT DISTINCT o.codigo_oficina 
+         FROM oficina o INNER JOIN empleado emp ON emp.codigo_oficina=o.codigo_oficina
+                        INNER JOIN cliente cl ON cl.codigo_empleado_rep_ventas = emp.codigo_empleado
+                        INNER JOIN pedido pe ON pe.codigo_cliente=cl.codigo_cliente
+                        INNER JOIN detalle_pedido dp ON dp.codigo_pedido=pe.codigo_pedido
+                        INNER JOIN producto pr ON pr.codigo_producto=dp.codigo_producto
+         WHERE pr.gama = 'Frutales')
+```
+
+Que también puede hacerse usando 'USING' para los JOIN cuando el campo tiene el mismo nombre en las dos tablas a unir:
+
+```sql
+SELECT o.codigo_oficina
+FROM oficina o
+WHERE o.codigo_oficina NOT IN 
+        (SELECT DISTINCT o.codigo_oficina 
+         FROM oficina o INNER JOIN empleado emp USING(codigo_oficina)
+                        INNER JOIN cliente cl ON cl.codigo_empleado_rep_ventas = emp.codigo_empleado
+                        INNER JOIN pedido pe USING(codigo_cliente)
+                        INNER JOIN detalle_pedido dp USING(codigo_pedido)
+                        INNER JOIN producto pr USING(codigo_producto)
+         WHERE pr.gama = 'Frutales')
+```
+
+17. Devuelve un listado con los clientes que han realizado algún pedido pero no han realizado ningún pago.
+
+```sql
+SELECT *
+FROM cliente cl
+WHERE 
+    cl.codigo_cliente IN (SELECT DISTINCT pe.codigo_cliente FROM pedido pe)
+    AND
+    cl.codigo_cliente NOT IN (SELECT DISTINCT pa.codigo_cliente FROM pago pa)
+```
+
+18. Devuelve un listado que muestre solamente los clientes que no han realizado ningún pago.
+
+```sql
+SELECT *
+FROM cliente cl
+WHERE NOT EXISTS (
+    SELECT * 
+    FROM pago pa 
+    WHERE pa.codigo_cliente=cl.codigo_cliente
+)
+```
+
+19. Devuelve un listado que muestre solamente los clientes que sí han realizado algún pago.
+
+```sql
+SELECT *
+FROM cliente cl
+WHERE EXISTS (
+    SELECT * 
+    FROM pago pa 
+    WHERE pa.codigo_cliente=cl.codigo_cliente
+)
+```
+
+20. Devuelve un listado de los productos que nunca han aparecido en un pedido.
+
+```sql
+SELECT *
+FROM producto p
+WHERE NOT EXISTS (
+    SELECT * 
+    FROM detalle_pedido dp 
+    WHERE dp.codigo_producto=p.codigo_producto
+)
+```
+
+21. Devuelve un listado de los productos que han aparecido en un pedido alguna vez.
+
+```sql
+SELECT *
+FROM producto p
+WHERE EXISTS (
+    SELECT * 
+    FROM detalle_pedido dp 
+    WHERE dp.codigo_producto=p.codigo_producto
+)
+```
+
+
 
 ## Consultas variadas
 
