@@ -694,6 +694,61 @@ FROM producto p
 WHERE p.cantidad_en_stock = (SELECT MIN(p2.cantidad_en_stock) FROM producto p2)
 ```
 
+11. Devuelve el nombre, apellido1 y cargo de los empleados que no representen a ningún cliente.
+
+```sql
+SELECT emp.nombre, emp.apellido1, emp.puesto
+FROM empleado emp
+WHERE emp.codigo_empleado NOT IN (SELECT DISTINCT(cl.codigo_empleado_rep_ventas) FROM cliente cl)
+```
+
+12. Devuelve un listado que muestre solamente los clientes que no han realizado ningún pago.
+
+```sql
+SELECT *
+FROM cliente cl
+WHERE cl.codigo_cliente NOT IN (
+    SELECT p.codigo_cliente FROM pago p
+)
+```
+
+13. Devuelve un listado que muestre solamente los clientes que sí han realizado algún pago.
+
+```sql
+SELECT *
+FROM cliente cl
+WHERE cl.codigo_cliente IN (
+    SELECT p.codigo_cliente FROM pago p
+)
+```
+
+14. Devuelve un listado de los productos que nunca han aparecido en un pedido.
+
+```sql
+SELECT *
+FROM producto p
+WHERE p.codigo_producto NOT IN (
+    SELECT dp.codigo_producto FROM detalle_pedido dp
+)
+```
+
+15. Devuelve el nombre, apellidos, puesto y teléfono de la oficina de aquellos empleados que no sean representante de ventas de ningún cliente.
+
+```sql
+SELECT e.nombre, e.apellido1, e.apellido2, e.puesto, o.telefono
+FROM empleado e 
+INNER JOIN oficina o ON e.codigo_oficina = o.codigo_oficina
+WHERE e.codigo_empleado NOT IN (
+    SELECT c.codigo_empleado_rep_ventas 
+    FROM cliente c
+)
+```
+
+16. Devuelve las oficinas donde no trabajan ninguno de los empleados que hayan sido los representantes de ventas de algún cliente que haya realizado la compra de algún producto de la gama Frutales.
+
+
+## Consultas variadas
+
 ## Tablas
 
 ### Gama producto
