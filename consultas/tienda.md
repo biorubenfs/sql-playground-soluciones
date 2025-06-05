@@ -304,6 +304,35 @@ FROM producto p
 INNER JOIN fabricante f ON f.id=p.id_fabricante
 ```
 
+2. Devuelve una lista con el nombre del producto, precio y nombre de fabricante de todos los productos de la base de datos. Ordene el resultado por el nombre del fabricante, por orden alfabético.
+
+```sql
+SELECT p.nombre, p.precio, f.nombre
+FROM producto p
+INNER JOIN fabricante f ON f.id=p.id_fabricante
+ORDER BY f.nombre ASC
+```
+
+3. Devuelve una lista con el identificador del producto, nombre del producto, identificador del fabricante y nombre del fabricante, de todos los productos de la base de datos.
+
+```sql
+SELECT p.id, p.nombre, f.id, f.nombre
+FROM producto p
+INNER JOIN fabricante f ON f.id=p.id_fabricante
+```
+
+4. Devuelve el nombre del producto, su precio y el nombre de su fabricante, del producto más barato.
+
+```sql
+SELECT p.nombre, p.precio, f.nombre
+FROM producto p
+INNER JOIN fabricante f ON f.id=p.id_fabricante
+ORDER BY p.precio
+LIMIT 1
+```
+
+5. 
+
 ## Composición externa
 
 ## Consultas resumen
