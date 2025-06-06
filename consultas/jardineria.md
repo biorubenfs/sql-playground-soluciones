@@ -837,6 +837,71 @@ WHERE EXISTS (
 
 ## Consultas variadas
 
+1. Devuelve el listado de clientes indicando el nombre del cliente y cuántos pedidos ha realizado. Tenga en cuenta que pueden existir clientes que no han realizado ningún pedido.
+
+```sql
+SELECT cl.nombre_cliente, COUNT(pe.codigo_pedido)
+FROM cliente cl
+LEFT JOIN pedido pe ON pe.codigo_cliente=cl.codigo_cliente
+GROUP BY cl.codigo_cliente
+```
+
+2. Devuelve un listado con los nombres de los clientes y el total pagado por cada uno de ellos. Tenga en cuenta que pueden existir clientes que no han realizado ningún pago.
+
+```sql
+SELECT cl.nombre_cliente, SUM(p.total)
+FROM cliente cl
+LEFT JOIN pago p ON p.codigo_cliente=cl.codigo_cliente
+GROUP BY cl.codigo_cliente
+```
+
+3. Devuelve el nombre de los clientes que hayan hecho pedidos en 2008 ordenados alfabéticamente de menor a mayor.
+
+```sql
+SELECT DISTINCT cl.nombre_cliente
+FROM cliente cl
+INNER JOIN pedido p ON p.codigo_cliente=cl.codigo_cliente
+WHERE YEAR(p.fecha_pedido)=2008
+ORDER BY cl.nombre_cliente ASC
+```
+
+4. Devuelve el nombre del cliente, el nombre y primer apellido de su representante de ventas y el número de teléfono de la oficina del representante de ventas, de aquellos clientes que no hayan realizado ningún pago.
+
+```sql
+SELECT cl.nombre_cliente, emp.nombre, emp.apellido1, o.telefono
+FROM cliente cl
+INNER JOIN empleado emp ON emp.codigo_empleado=cl.codigo_empleado_rep_ventas
+INNER JOIN oficina o ON o.codigo_oficina=emp.codigo_oficina
+WHERE cl.codigo_cliente NOT IN (SELECT DISTINCT p.codigo_cliente FROM pago p)
+```
+
+5. Devuelve el listado de clientes donde aparezca el nombre del cliente, el nombre y primer apellido de su representante de ventas y la ciudad donde está su oficina.
+
+```sql
+SELECT cl.nombre_cliente, emp.nombre, emp.apellido1, o.ciudad
+FROM cliente cl
+INNER JOIN empleado emp ON emp.codigo_empleado=cl.codigo_empleado_rep_ventas
+INNER JOIN oficina o ON o.codigo_oficina=emp.codigo_oficina
+```
+
+6. Devuelve el nombre, apellidos, puesto y teléfono de la oficina de aquellos empleados que no sean representantes de ventas de ningún cliente.
+
+```sql
+SELECT emp.nombre, emp.apellido1, emp.apellido2, emp.puesto, of.telefono
+FROM empleado emp
+INNER JOIN oficina of ON of.codigo_oficina=emp.codigo_oficina
+WHERE emp.codigo_empleado NOT IN (SELECT DISTINCT cl.codigo_empleado_rep_ventas FROM cliente cl)
+```
+
+7. Devuelve un listado indicando todas las ciudades donde hay oficinas y el número de empleados que tiene.
+
+```sql
+SELECT of.ciudad, COUNT(emp.codigo_empleado)
+FROM oficina of
+INNER JOIN empleado emp ON emp.codigo_oficina=of.codigo_oficina
+GROUP BY of.ciudad
+```
+
 ## Tablas
 
 ### Gama producto
