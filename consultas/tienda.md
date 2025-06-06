@@ -404,10 +404,34 @@ FROM fabricante f
 INNER JOIN producto p ON f.id=p.id_fabricante
 ```
 
-
-
-
 ## Composición externa
+
+1. Devuelve un listado de todos los fabricantes que existen en la base de datos, junto con los productos que tiene cada uno de ellos. El listado deberá mostrar también aquellos fabricantes que no tienen productos asociados.
+
+```sql
+SELECT *
+FROM fabricante f
+LEFT JOIN producto p ON p.id_fabricante=f.id
+```
+
+2. Devuelve un listado donde sólo aparezcan aquellos fabricantes que no tienen ningún producto asociado.
+
+```sql
+SELECT *
+FROM fabricante f
+LEFT JOIN producto p ON p.id_fabricante=f.id
+WHERE p.id_fabricante IS NULL
+```
+
+o bien:
+
+```sql
+SELECT *
+FROM fabricante f
+WHERE f.id NOT IN (SELECT DISTINCT p.id_fabricante FROM producto p)
+```
+
+
 
 ## Consultas resumen
 
