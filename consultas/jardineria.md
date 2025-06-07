@@ -759,7 +759,7 @@ WHERE o.codigo_oficina NOT IN
          WHERE pr.gama = 'Frutales')
 ```
 
-Que también puede hacerse usando 'USING' para los JOIN cuando el campo tiene el mismo nombre en las dos tablas a unir:
+Que también puede hacerse usando `USING` para los `JOIN` cuando el campo tiene el mismo nombre en las dos tablas a unir:
 
 ```sql
 SELECT o.codigo_oficina
@@ -832,8 +832,6 @@ WHERE EXISTS (
     WHERE dp.codigo_producto=p.codigo_producto
 )
 ```
-
-
 
 ## Consultas variadas
 

@@ -97,8 +97,6 @@ FROM comercial c
 WHERE c.nombre LIKE '%el' OR c.nombre LIKE '%o'
 ```
 
-
-
 ## Composición interna
 
 1. Devuelve un listado con el identificador, nombre y los apellidos de todos los clientes que han realizado algún pedido. El listado debe estar ordenado alfabéticamente y se deben eliminar los elementos repetidos.
@@ -338,7 +336,7 @@ GROUP BY YEAR(fecha)
 
 15. Devuelve el número total de pedidos que se han realizado cada año.
 
-```
+```sql
 SELECT YEAR(fecha) AS AÑO, COUNT(*)
 FROM pedido 
 GROUP BY YEAR(fecha)
