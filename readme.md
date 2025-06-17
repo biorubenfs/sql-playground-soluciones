@@ -6,6 +6,8 @@ Los ejercicios fueron obtenidos desde la página de [José Juan Sanchez](https:/
 
 La misma cuenta con múltiples bases de datos y ejercicios.
 
+> **IMPORTANTE**: Abrir la página con **Chrome**. Con Firefox hay algunas cosas que no funcionan bien.
+
 ## Ejercicios
 
 ### Base de datos N° 1 - Tienda de informática
