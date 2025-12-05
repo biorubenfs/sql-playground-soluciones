@@ -388,7 +388,7 @@ INNER JOIN gama_producto gp ON gp.gama=p.gama
 WHERE dp.codigo_pedido IS NULL
 ```
 
-10.Devuelve las oficinas donde no trabajan ninguno de los empleados que hayan sido los representantes de ventas de algún cliente que haya realizado la compra de algún producto de la gama Frutales.
+10. Devuelve las oficinas donde no trabajan ninguno de los empleados que hayan sido los representantes de ventas de algún cliente que haya realizado la compra de algún producto de la gama Frutales.
 
 ```sql
 SELECT *
