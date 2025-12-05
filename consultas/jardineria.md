@@ -122,7 +122,7 @@ WHERE DATEDIFF(p.fecha_esperada, p.fecha_entrega) >= 2
 ```
 
 ¿Sería posible resolver esta consulta utilizando el operador de suma + o resta -?
-```
+```sql
 SELECT p.codigo_pedido, p.codigo_cliente, p.fecha_esperada, p.fecha_entrega
 FROM pedido p
 WHERE p.fecha_entrega <= p.fecha_esperada - 2
